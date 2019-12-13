@@ -39,9 +39,22 @@ export function activate(context: vscode.ExtensionContext) {
 			activeEditor.setDecorations(thisWarningDecorationType, thisInJestFiles);
 		}
 
+		// Possible AHK Assignments
+		//?	:=
+		//?	+=
+		//?	-=
+		//?	*=
+		//?	/=
+		//?	//=
+		//?	.=
+		//?	|=
+		//?	&=
+		//?	^=
+		//?	>>=
+		//?	<<=
 		const ahkExtension = /.*\.ahk/g;
 		if (ahkExtension.exec(activeEditor.document.fileName)) {
-			const regEx = /^(?!\s*(if|while)).*[^:]=.*$/gmi;
+			const regEx = /^(?!\s*(if|while)).*[^:^\*^\+^\-^\/^\^^\.^\&^\|^\<^\>]=.*$/gmi;
 			const text = activeEditor.document.getText();
 			const thisInJestFiles: vscode.DecorationOptions[] = [];
 			let match;
