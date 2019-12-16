@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 // this method is called when vs code is activated
 export function activate(context: vscode.ExtensionContext) {
 
-	console.log('decorator sample is activated');
+	console.log('b0sh extension activated');
 
 	let timeout: NodeJS.Timer | undefined = undefined;
 
@@ -52,9 +52,16 @@ export function activate(context: vscode.ExtensionContext) {
 		//?	^=
 		//?	>>=
 		//?	<<=
+
+		// Possible AHK variable Characters:
+		//? a-z A-Z _
+
+		// Whitespace but not new line:
+		// https://stackoverflow.com/questions/3469080/match-whitespace-but-not-newlines
+		// [^\S\r\n]
 		const ahkExtension = /.*\.ahk/g;
 		if (ahkExtension.exec(activeEditor.document.fileName)) {
-			const regEx = /^(?!\s*(if|while)).*[^:^\*^\+^\-^\/^\^^\.^\&^\|^\<^\>]=.*$/gmi;
+			const regEx = /^[^\S\r\n]*[A-Za-z_]+[^\S\r\n]*[^:^\*^\+^\-^\/^\^^\.^\&^\|^\<^\>]=.*$/gmi;
 			const text = activeEditor.document.getText();
 			const thisInJestFiles: vscode.DecorationOptions[] = [];
 			let match;
@@ -94,4 +101,3 @@ export function activate(context: vscode.ExtensionContext) {
 	}, null, context.subscriptions);
 
 }
-
